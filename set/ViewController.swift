@@ -23,7 +23,19 @@ class ViewController: UIViewController {
     
     private func updateCardIdentifier() {
         var game = SetGame()
-        cardIdentifier.text = String(game.cardSequence[0])
+//        var caseText: String
+//        switch game[1].cardNumber {
+//        case .choiceOne:
+//            caseText = "one"
+//        case .choiceTwo:
+//            caseText = "two"
+//        case .choiceThree:
+//            caseText = "three"
+//        }
+//
+//        cardIdentifier.text = caseText
+        print("test \(game.cards[0])")
     }
 }
+
 

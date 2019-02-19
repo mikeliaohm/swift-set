@@ -9,10 +9,10 @@
 import Foundation
 
 struct Card {
-    private var cardNumber = CardAttribute.choiceOne
-    private var cardColor = CardAttribute.choiceOne
-    private var cardShade = CardAttribute.choiceOne
-    private var cardShape = CardAttribute.choiceOne
+    var cardNumber = CardAttribute.choiceOne
+    var cardColor = CardAttribute.choiceOne
+    var cardShade = CardAttribute.choiceOne
+    var cardShape = CardAttribute.choiceOne
     
     private var identifier: Int
     
