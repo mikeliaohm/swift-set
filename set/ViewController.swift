@@ -15,6 +15,15 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-
+    @IBOutlet weak var cardIdentifier: UILabel! {
+        didSet {
+            updateCardIdentifier()
+        }
+    }
+    
+    private func updateCardIdentifier() {
+        var game = SetGame()
+        cardIdentifier.text = String(game.cardSequence[0])
+    }
 }
 
