@@ -9,10 +9,6 @@
 import Foundation
 
 struct Card {
-    var cardNumber = CardAttribute.choiceOne
-    var cardColor = CardAttribute.choiceOne
-    var cardShade = CardAttribute.choiceOne
-    var cardShape = CardAttribute.choiceOne
     
     private var identifier: Int
     
@@ -29,7 +25,31 @@ struct Card {
 }
 
 enum CardAttribute {
-    case choiceOne
-    case choiceTwo
-    case choiceThree
+    case color(AttributeOption)
+    case number(AttributeOption)
+    case shade(AttributeOption)
+    case shape(AttributeOption)
+    
+    enum AttributeOption: CaseIterable {
+        case choiceOne
+        case choiceTwo
+        case choiceThree
+    }
+    
+    static var allCases: [[CardAttribute]] {
+        var caseArray = [[CardAttribute]]()
+        for colorAttribute in AttributeOption.allCases.map(CardAttribute.color) {
+            for numberAttribute in AttributeOption.allCases.map(CardAttribute.number) {
+                for shadeAttribute in AttributeOption.allCases.map(CardAttribute.shade) {
+                    for shapeAttribute in AttributeOption.allCases.map(CardAttribute.shape) {
+                        caseArray.append([colorAttribute, numberAttribute, shadeAttribute, shapeAttribute])
+                    }
+                }
+
+            }
+        }
+        return caseArray
+    }
+    
 }
+

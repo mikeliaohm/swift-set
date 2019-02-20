@@ -35,6 +35,13 @@ class ViewController: UIViewController {
 //
 //        cardIdentifier.text = caseText
         print("test \(game.cards[0])")
+
+        var cases = CardAttribute.allCases
+        print("cases: \(cases)")
+        print("case count: \(cases.count)")
+
+
+        print("another test")
     }
 }
 

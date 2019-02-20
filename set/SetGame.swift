@@ -9,9 +9,8 @@
 import Foundation
 
 struct SetGame {
-    var cards = [Card]()
     
-    var cardSequence = Array(1...81).shuffled()
+    var cards = [Card]()
 
     init() {
 //        initiate 81 cards in the set game
