@@ -11,7 +11,7 @@ import Foundation
 struct Card {
     
     private var identifier: Int
-    private var color, number, shade, shape: CardAttribute
+    private(set) var color, number, shade, shape: CardAttribute
     private static var identifierFactory = 0
     
     private static func getUniqueIdentifier() -> Int {
