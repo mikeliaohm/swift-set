@@ -10,8 +10,21 @@ import Foundation
 
 struct SetGame {
     
-    var cards = [Card]()
-
+    private(set) var cards = [Card]()
+    private var faceUpCard = [Int]()
+    
+    mutating func chooseCard(at index: Int) {
+        faceUpCard.append(index)
+        if faceUpCard.count == 3 {
+            faceUpCard = [Int]()
+        } else {
+            
+        }
+        
+        
+        
+    }
+    
     init() {
 //        initiate 81 cards in the set game
         for _ in 1...81 {

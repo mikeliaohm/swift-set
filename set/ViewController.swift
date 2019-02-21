@@ -37,11 +37,18 @@ class ViewController: UIViewController {
         print("test \(game.cards[0])")
 
         var cases = CardAttribute.allCases
-        print("cases: \(cases)")
-        print("case count: \(cases.count)")
-
-
-        print("another test")
+        
+//        print("cases: \(cases)")
+//        print("cases: \(cases[80][0])")
+//        print("case count: \(cases.count)")
+//        let attribute = CardAttribute.color(.choiceThree)
+//        let attribute1 = cases[80][0]
+//        let result = attribute1 == attribute
+//        print("\(result)")
+//        var attribute3: CardAttribute
+//        attribute3(.color) = attribute1
+//        let attribute2 = CardAttribute(.color(.choiceOne), .number(.choiceOne), .shade(.choiceOne), .shape(.choiceOne))
+//        print("\(attribute2)")
     }
 }
 
