@@ -11,20 +11,30 @@ import Foundation
 struct Card {
     
     private var identifier: Int
-    
+    private var color, number, shade, shape: CardAttribute
     private static var identifierFactory = 0
     
     private static func getUniqueIdentifier() -> Int {
         identifierFactory += 1
+//        assert that only 81 cards are allowed to be init'ed
+        assert(identifierFactory <= 81, "Card init exceeding range, only 81 cards are available")
         return identifierFactory
     }
     
     init() {
         self.identifier = Card.getUniqueIdentifier()
+        
+        let attributeAllCases = CardAttribute.allCases
+        let attributeIdentifier = self.identifier - 1
+        self.color = attributeAllCases[attributeIdentifier][0]
+        self.number = attributeAllCases[attributeIdentifier][1]
+        self.shade = attributeAllCases[attributeIdentifier][2]
+        self.shape = attributeAllCases[attributeIdentifier][3]
     }
 }
 
-enum CardAttribute {
+enum CardAttribute: Equatable {
+    
     case color(AttributeOption)
     case number(AttributeOption)
     case shade(AttributeOption)
