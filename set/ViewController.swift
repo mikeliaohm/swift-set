@@ -34,9 +34,8 @@ class ViewController: UIViewController {
 //        }
 //
 //        cardIdentifier.text = caseText
-        print("test \(game.cards[0])")
-
-        var cases = CardAttribute.allCases
+        print("first card: \(game.cards[0])")
+        print("first card attribute: \(game.cards[0].cardAttribute)")
         
 //        print("cases: \(cases)")
 //        print("cases: \(cases[80][0])")
@@ -50,9 +49,7 @@ class ViewController: UIViewController {
 //        let attribute2 = CardAttribute(.color(.choiceOne), .number(.choiceOne), .shade(.choiceOne), .shape(.choiceOne))
 //        print("\(attribute2)")
     
-    
-        let result = game.cards.map { $0.color }
-        print("\(result)")
+
     }
     
 }

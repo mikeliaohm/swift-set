@@ -11,22 +11,18 @@ import Foundation
 struct SetGame {
     
     private(set) var cards = [Card]()
-    private var choosenCard = [Card]()
+    private var choosenCards = [Card]()
     
     mutating func chooseCard(at index: Int) {
-        choosenCard.append(cards[index])
-        if choosenCard.count == 3 {
-            checkSet(of: choosenCard)
-            choosenCard = []
+        choosenCards.append(cards[index])
+        if choosenCards.count == 3 {
+            checkSet(of: choosenCards)
+            choosenCards = []
         }
     }
     
     mutating func checkSet(of cards: [Card]) {
-        let colorArray = cards.map { $0.color }
-        let numberArray = cards.map { $0.number }
-        let shadeArray = cards.map { $0.shade }
-        let shapeArray = cards.map { $0.shape }
-        let result = colorArray.dropFirst().allSatisfy({ $0 == colorArray.first })
+
     }
     
     init() {

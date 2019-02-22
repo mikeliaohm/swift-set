@@ -11,7 +11,7 @@ import Foundation
 struct Card {
     
     private var identifier: Int
-    private(set) var color, number, shade, shape: CardAttribute
+    private(set) var cardAttribute: CardAttribute
     private static var identifierFactory = 0
     
     private static func getUniqueIdentifier() -> Int {
@@ -23,22 +23,13 @@ struct Card {
     
     init() {
         self.identifier = Card.getUniqueIdentifier()
-        
-        let attributeAllCases = CardAttribute.allCases
-        let attributeIdentifier = self.identifier - 1
-        self.color = attributeAllCases[attributeIdentifier][0]
-        self.number = attributeAllCases[attributeIdentifier][1]
-        self.shade = attributeAllCases[attributeIdentifier][2]
-        self.shape = attributeAllCases[attributeIdentifier][3]
+        self.cardAttribute = CardAttribute(at: self.identifier - 1)
     }
 }
 
-enum CardAttribute: Equatable {
+struct CardAttribute {
     
-    case color(AttributeOption)
-    case number(AttributeOption)
-    case shade(AttributeOption)
-    case shape(AttributeOption)
+    private(set) var color, number, shade, shape: AttributeOption
     
     enum AttributeOption: CaseIterable {
         case choiceOne
@@ -46,19 +37,26 @@ enum CardAttribute: Equatable {
         case choiceThree
     }
     
-    static var allCases: [[CardAttribute]] {
-        var caseArray = [[CardAttribute]]()
-        for colorAttribute in AttributeOption.allCases.map(CardAttribute.color) {
-            for numberAttribute in AttributeOption.allCases.map(CardAttribute.number) {
-                for shadeAttribute in AttributeOption.allCases.map(CardAttribute.shade) {
-                    for shapeAttribute in AttributeOption.allCases.map(CardAttribute.shape) {
+    static var allCases: [[AttributeOption]] {
+        var caseArray = [[AttributeOption]]()
+        for colorAttribute in AttributeOption.allCases {
+            for numberAttribute in AttributeOption.allCases {
+                for shadeAttribute in AttributeOption.allCases {
+                    for shapeAttribute in AttributeOption.allCases {
                         caseArray.append([colorAttribute, numberAttribute, shadeAttribute, shapeAttribute])
                     }
                 }
-
             }
         }
         return caseArray
+    }
+    
+    init(at index: Int) {
+        let allCases = CardAttribute.allCases
+        self.color = allCases[index][0]
+        self.number = allCases[index][1]
+        self.shade = allCases[index][2]
+        self.shape = allCases[index][3]
     }
     
 }
