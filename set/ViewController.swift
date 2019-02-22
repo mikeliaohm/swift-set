@@ -49,7 +49,12 @@ class ViewController: UIViewController {
 //        attribute3(.color) = attribute1
 //        let attribute2 = CardAttribute(.color(.choiceOne), .number(.choiceOne), .shade(.choiceOne), .shape(.choiceOne))
 //        print("\(attribute2)")
+    
+    
+        let result = game.cards.map { $0.color }
+        print("\(result)")
     }
+    
 }
 
 
