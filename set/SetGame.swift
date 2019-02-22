@@ -22,7 +22,7 @@ struct SetGame {
     }
     
     mutating func checkSet(of cards: [Card]) {
-
+    //  IDEA: use Set(Array) to check whether arrays formed from card's four attribute have all equal elements or all unqiue elements. Set(Array).count == 1 or Set(Array).count == 3
     }
     
     init() {

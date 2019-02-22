@@ -35,7 +35,9 @@ class ViewController: UIViewController {
 //
 //        cardIdentifier.text = caseText
         print("first card: \(game.cards[0])")
-        print("first card attribute: \(game.cards[0].cardAttribute)")
+        let attribute = game.cards[0].cardAttribute
+        print("first card attribute: \(Set([attribute.color, attribute.number, attribute.shape, attribute.shade]))")
+//        print("set testing: \(Set(game.cards[0].cardAttribute))")
         
 //        print("cases: \(cases)")
 //        print("cases: \(cases[80][0])")
