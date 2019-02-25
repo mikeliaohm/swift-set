@@ -71,10 +71,6 @@ struct SetGame {
 // extend protocol
 extension Collection {
     var setFormed: Bool {
-        if count == 1 || count == 3 {
-            return true
-        } else {
-            return false
-        }
+        return count == 1 || count == 3
     }
 }
