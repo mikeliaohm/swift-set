@@ -23,7 +23,13 @@ struct SetGame {
         }
     }
     
-    private mutating func checkSet(of chosenCards: [Card]) -> Bool {    //  IDEA: use Set(Array) to check whether arrays formed from card's four attribute have all equal elements or all unqiue elements. Set(Array).count == 1 or Set(Array).count == 3
+    mutating func dealCards(with numberOfCards: Int) {
+        playedCards = Array(cards[0...numberOfCards-1])
+        cards = Array(cards[numberOfCards...])
+    }
+    
+    private mutating func checkSet(of chosenCards: [Card]) -> Bool {
+        //  IDEA: use Set(Array) to check whether arrays formed from card's four attribute have all equal elements or all unqiue elements. Set(Array).count == 1 or Set(Array).count == 3
         let colorAttribute = chosenCards.map { $0.cardAttribute.color }
         let numberAttribute = chosenCards.map { $0.cardAttribute.number }
         let shadeAttribute = chosenCards.map { $0.cardAttribute.shade }
@@ -36,12 +42,6 @@ struct SetGame {
         } else {
             return false
         }
-    }
-    
-    mutating func dealCards(with numberOfCards: Int) {
-        playedCards = Array(cards[0...numberOfCards-1])
-        cards = Array(cards[numberOfCards...])
-        
     }
     
     init() {
