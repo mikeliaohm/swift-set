@@ -11,20 +11,32 @@ import Foundation
 struct SetGame {
     
     private(set) var cards = [Card]()
-    private(set) var chosenCards = [Card](), matchedCards = [Card](), playedCards = [Card]()
+    private(set) var chosenCards = [Card](), matchedCards = [Card](), playedCards = [Card?]()
+    private(set) var matchedSet = false
     
     mutating func chooseCard(at index: Int) {
         chosenCards.append(cards[index])
         if chosenCards.count == 3 {
             if checkSet(of: chosenCards) {
                 matchedCards += chosenCards
+                matchedSet = true
             }
-            chosenCards = []
         }
     }
     
+    mutating func updateCard() {
+        chosenCards = []
+    }
+    
     mutating func dealCards(with numberOfCards: Int) {
-        playedCards = Array(cards[0...numberOfCards-1])
+        // check if playedCards contain any matchedCards. If so replace those cards with cards to deal
+        let cardsDealt = Array(cards[0...numberOfCards-1])
+        if matchedSet {
+            // find the chosenCards in playedCards and replace that with cardsDealt
+        } else {
+            playedCards += cardsDealt
+        }
+        assert(playedCards.count <= 24, "You can not have more than 24 cards played simuteneously.")
         cards = Array(cards[numberOfCards...])
     }
     
