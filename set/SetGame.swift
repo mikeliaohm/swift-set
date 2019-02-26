@@ -17,13 +17,13 @@ struct SetGame {
         if chosenCards.count == 3 {
             if checkSet(of: chosenCards) {
                 matchedCards += chosenCards
-                playedCards[0] = nil
+                for card in chosenCards {
+                    let cardSpot = playedCards.index(of: card)!
+                    playedCards[cardSpot] = card
+                }
             }
-        }
-    }
-    
-    mutating func updateCard() {
         chosenCards = []
+        }
     }
     
     mutating func dealCards(with numberOfCards: Int) {
@@ -33,8 +33,8 @@ struct SetGame {
         let cardsDealt = Array(cards[0...numberOfCards-1])
             // find the chosenCards in playedCards and replace that with cardsDealt
         for card in cardsDealt {
-            let cardSpace = playedCards.firstIndex{ $0 == nil }
-            (cardSpace != nil) ? playedCards[cardSpace!] = card : playedCards.append(card)
+            let cardSpot = playedCards.firstIndex{ $0 == nil }
+            (cardSpot != nil) ? playedCards[cardSpot!] = card : playedCards.append(card)
         }
         cards = Array(cards[numberOfCards...])
     }

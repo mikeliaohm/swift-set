@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct Card {
+struct Card: Equatable {
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+    
     
     private var identifier: Int
     private(set) var cardAttribute: CardAttribute
