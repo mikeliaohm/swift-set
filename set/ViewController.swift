@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     }
     
     private func updateCardIdentifier() {
-        let game = SetGame()
+        var game = SetGame()
         
         print("initial cards: \(game.playedCards.count)")
         print("remaining cards: \(game.cards.count)")
@@ -36,18 +36,21 @@ class ViewController: UIViewController {
 //            caseText = "three"
 //        }
 //
+        let space =  [1, nil, 2, nil].firstIndex(of: nil)
+        print("\(space!)")
+        print("played cards: \(game.playedCards)")
 //        cardIdentifier.text = caseText
 //        print("first card: \(game.cards[0])")
 //        let attribute = game.cards[0].cardAttribute
 //        print("first card attribute: \(Set([attribute.color, attribute.number, attribute.shape, attribute.shade]))")
 //        print("first 3 cards: \(game.cards[0...2])")
-//        let setCards = game.cards[0...2]
+//        var setCards = game.cards[0...2]
 //
 //
 //        print("color array: \(setCards.map { $0.cardAttribute.color })")
 //        let resultAll = game.checkSet(of: Array(setCards))
 //        print("results: \(resultAll)")
-//
+
 //        print("set testing: \(Set(game.cards[0].cardAttribute))")
         
 //        print("cases: \(cases)")

@@ -10,16 +10,14 @@ import Foundation
 
 struct SetGame {
     
-    private(set) var cards = [Card]()
-    private(set) var chosenCards = [Card](), matchedCards = [Card](), playedCards = [Card?]()
-    private(set) var matchedSet = false
+    private(set) var cards = [Card](), chosenCards = [Card](), matchedCards = [Card](), playedCards = [Card?](repeating: nil, count: 24)
     
     mutating func chooseCard(at index: Int) {
         chosenCards.append(cards[index])
         if chosenCards.count == 3 {
             if checkSet(of: chosenCards) {
                 matchedCards += chosenCards
-                matchedSet = true
+                playedCards[0] = nil
             }
         }
     }
@@ -30,13 +28,14 @@ struct SetGame {
     
     mutating func dealCards(with numberOfCards: Int) {
         // check if playedCards contain any matchedCards. If so replace those cards with cards to deal
+        assert(playedCards.filter({ $0 != nil }).count <= 24, "You can not have more than 24 cards played simuteneously.")
+        
         let cardsDealt = Array(cards[0...numberOfCards-1])
-        if matchedSet {
             // find the chosenCards in playedCards and replace that with cardsDealt
-        } else {
-            playedCards += cardsDealt
+        for card in cardsDealt {
+            let cardSpace = playedCards.firstIndex{ $0 == nil }
+            (cardSpace != nil) ? playedCards[cardSpace!] = card : playedCards.append(card)
         }
-        assert(playedCards.count <= 24, "You can not have more than 24 cards played simuteneously.")
         cards = Array(cards[numberOfCards...])
     }
     
@@ -46,14 +45,10 @@ struct SetGame {
         let numberAttribute = chosenCards.map { $0.cardAttribute.number }
         let shadeAttribute = chosenCards.map { $0.cardAttribute.shade }
         let shapeAttribute = chosenCards.map { $0.cardAttribute.shape }
-        if Set(colorAttribute).setFormed &&
+        return Set(colorAttribute).setFormed &&
             Set(numberAttribute).setFormed &&
             Set(shadeAttribute).setFormed &&
-            Set(shapeAttribute).setFormed {
-            return true
-        } else {
-            return false
-        }
+            Set(shapeAttribute).setFormed
     }
     
     init() {
