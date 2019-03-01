@@ -21,6 +21,9 @@ struct Card: Equatable {
     private static func getUniqueIdentifier() -> Int {
         identifierFactory += 1
 //        assert that only 81 cards are allowed to be init'ed
+        if identifierFactory == 82 {
+            identifierFactory = 1
+        }
         assert(identifierFactory <= 81, "Card init exceeding range, only 81 cards are available")
         return identifierFactory
     }
