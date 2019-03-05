@@ -14,6 +14,7 @@ struct SetGame {
     
     mutating func chooseCard(at index: Int) {
         chosenCards.append(cards[index])
+        //        IDEA: do not check whether there are 3 cards seleted. Only call chooseCard when the view controller makes sure three cards have been selected.
         if chosenCards.count == 3 {
             if checkSet(of: chosenCards) {
                 matchedCards += chosenCards
