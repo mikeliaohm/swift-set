@@ -20,7 +20,8 @@ class ViewController: UIViewController {
     private let cardShape = ["●", "▲", "■"]
     
     @IBOutlet var cardButtons: [UIButton]!
-
+    @IBOutlet weak var dealButton: UIButton!
+    
     @IBAction func chooseCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.index(of: sender) {
             game.chooseCard(at: cardNumber)
@@ -37,9 +38,18 @@ class ViewController: UIViewController {
     }
     
     @IBAction func dealCard(_ sender: UIButton) {
-        game.dealCards(with: 3)
-        updateViewFromModel() 
+        let numberOfFaceUpCards = game.playedCards.filter { $0 != nil }.count
+        if numberOfFaceUpCards <= 21 {
+            game.dealCards(with: 3)
+            updateViewFromModel()
+            if numberOfFaceUpCards == 21 {
+                dealButton.setTitle("Cards full", for: UIControl.State.normal)
+            }
+        }
     }
+    
+//    private func disableDealButton() {
+//    }
     
     private func updateViewFromModel() {
         var displayShape: String
