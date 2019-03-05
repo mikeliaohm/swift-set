@@ -12,9 +12,9 @@ struct SetGame {
     
     private(set) var cards = [Card](), chosenCards = [Card](), matchedCards = [Card](), playedCards = [Card?](repeating: nil, count: 24)
     
-    mutating func chooseCard(at index: Int) {
+    mutating func evaluateSet(at index: Int) {
         chosenCards.append(cards[index])
-        //        IDEA: do not check whether there are 3 cards seleted. Only call chooseCard when the view controller makes sure three cards have been selected.
+        //  IDEA: do not check whether there are 3 cards seleted. Only call chooseCard when the view controller makes sure three cards have been selected.
         if chosenCards.count == 3 {
             if checkSet(of: chosenCards) {
                 matchedCards += chosenCards

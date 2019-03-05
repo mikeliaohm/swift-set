@@ -40,18 +40,10 @@ class ViewController: UIViewController {
             } else {
                 card.layer.borderWidth = 1.0
                 card.layer.borderColor = nil
+                // IDEA: when chosenCards reach 3 card, call evaluateSet func in SetGame
             }
         }
     }
-//        if let cardNumber = cardButtons.index(of: sender) {
-//            sender.layer.borderWidth = 3.0
-//            sender.layer.borderColor = UIColor.blue.cgColor
-////            game.chooseCard(at: cardNumber)
-//        } else {
-//            print("choosen card was not in cardButtons.")
-//        }
-//        updateViewFromModel()
-//    }
     
     @IBAction func startGame(_ sender: UIButton) {
         game = SetGame()
