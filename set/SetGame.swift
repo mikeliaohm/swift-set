@@ -34,9 +34,11 @@ struct SetGame {
             // find the chosenCards in playedCards and replace that with cardsDealt
         for card in cardsDealt {
             let cardSpot = playedCards.firstIndex{ $0 == nil }
-            (cardSpot != nil) ? playedCards[cardSpot!] = card : playedCards.append(card)
+            playedCards[cardSpot!] = card
         }
         cards = Array(cards[numberOfCards...])
+        print("played cards count: \(playedCards.count)")
+        print("cards left: \(cards.count)")
     }
     
     private mutating func checkSet(of chosenCards: [Card]) -> Bool {

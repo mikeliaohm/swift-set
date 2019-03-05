@@ -36,6 +36,11 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
+    @IBAction func dealCard(_ sender: UIButton) {
+        game.dealCards(with: 3)
+        updateViewFromModel() 
+    }
+    
     private func updateViewFromModel() {
         var displayShape: String
         var displayFill: Float
@@ -84,10 +89,9 @@ class ViewController: UIViewController {
             }
             
             let attributes: [NSAttributedString.Key:Any] = [
-                .strokeColor : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
+                .strokeColor : displayColor,
                 .strokeWidth : displayFill,
                 .foregroundColor: displayShade
-                ,
             ]
             let attributedString = NSAttributedString(string: displayShape, attributes: attributes)
             button.setAttributedTitle(attributedString, for: UIControl.State.normal)
