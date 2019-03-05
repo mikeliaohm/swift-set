@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     }
 
     private lazy var game = SetGame()
+    private var chosenCards = [UIButton]()
     private let cardColor = [#colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1), #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1), #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)]
     private let cardShape = ["●", "▲", "■"]
     
@@ -23,14 +24,34 @@ class ViewController: UIViewController {
     @IBOutlet weak var dealButton: UIButton!
     
     @IBAction func chooseCard(_ sender: UIButton) {
-        if let cardNumber = cardButtons.index(of: sender) {
-            game.chooseCard(at: cardNumber)
-            updateViewFromModel()
+        if chosenCards.contains(sender) {
+            chosenCards = chosenCards.filter { $0 != sender }
         } else {
-            print("choosen card was not in cardButtons.")
+            chosenCards.append(sender)
         }
-        updateViewFromModel()
+        updateChosenCards()
     }
+    
+    private func updateChosenCards() {
+        for card in cardButtons {
+            if chosenCards.contains(card) {
+                card.layer.borderWidth = 3.0
+                card.layer.borderColor = UIColor.blue.cgColor
+            } else {
+                card.layer.borderWidth = 1.0
+                card.layer.borderColor = nil
+            }
+        }
+    }
+//        if let cardNumber = cardButtons.index(of: sender) {
+//            sender.layer.borderWidth = 3.0
+//            sender.layer.borderColor = UIColor.blue.cgColor
+////            game.chooseCard(at: cardNumber)
+//        } else {
+//            print("choosen card was not in cardButtons.")
+//        }
+//        updateViewFromModel()
+//    }
     
     @IBAction func startGame(_ sender: UIButton) {
         game = SetGame()
@@ -108,9 +129,6 @@ class ViewController: UIViewController {
 //            button.backgroundColor = (card != nil) ? #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0)
         }
     }
-
-    
-    
 }
 
 
