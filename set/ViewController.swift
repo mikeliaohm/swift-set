@@ -24,12 +24,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var dealButton: UIButton!
     
     @IBAction func chooseCard(_ sender: UIButton) {
-        if chosenCards.contains(sender) {
-            chosenCards = chosenCards.filter { $0 != sender }
-        } else {
-            chosenCards.append(sender)
+        let cardNumber = cardButtons.index(of: sender)
+        if (game.playedCards[cardNumber!] != nil) {
+            if chosenCards.contains(sender) {
+                chosenCards = chosenCards.filter { $0 != sender }
+            } else {
+                chosenCards.append(sender)
+            }
+            updateChosenCards()
+            // IDEA: when chosenCards reach 3 card, call evaluateSet func in SetGame
         }
-        updateChosenCards()
     }
     
     private func updateChosenCards() {
@@ -40,7 +44,6 @@ class ViewController: UIViewController {
             } else {
                 card.layer.borderWidth = 1.0
                 card.layer.borderColor = nil
-                // IDEA: when chosenCards reach 3 card, call evaluateSet func in SetGame
             }
         }
     }
