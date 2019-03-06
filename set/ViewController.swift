@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     }
 
     private lazy var game = SetGame()
-    private var chosenCards = [UIButton]()
+    private var chosenButtons = [UIButton]()
     private let cardColor = [#colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1), #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1), #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)]
     private let cardShape = ["●", "▲", "■"]
     
@@ -26,19 +26,27 @@ class ViewController: UIViewController {
     @IBAction func chooseCard(_ sender: UIButton) {
         let cardNumber = cardButtons.index(of: sender)
         if (game.playedCards[cardNumber!] != nil) {
-            if chosenCards.contains(sender) {
-                chosenCards = chosenCards.filter { $0 != sender }
+            if chosenButtons.contains(sender) {
+                chosenButtons = chosenButtons.filter { $0 != sender }
             } else {
-                chosenCards.append(sender)
+                chosenButtons.append(sender)
+                if chosenButtons.count == 3 {
+                    var chosenCards = [Card]()
+                    for button in chosenButtons {
+                        let cardNumber = cardButtons.index(of: button)
+                        chosenCards.append(game.playedCards[cardNumber!]!)
+                    }
+                    // IDEA: if there is a match in set, next time when user chooseCard we should deselect all matched cards and call updateViewFromModel to reflect these should now be set to nil.
+                    game.evaluateSet(of: chosenCards)
+                }
             }
             updateChosenCards()
-            // IDEA: when chosenCards reach 3 card, call evaluateSet func in SetGame
         }
     }
     
     private func updateChosenCards() {
         for card in cardButtons {
-            if chosenCards.contains(card) {
+            if chosenButtons.contains(card) {
                 card.layer.borderWidth = 3.0
                 card.layer.borderColor = UIColor.blue.cgColor
             } else {

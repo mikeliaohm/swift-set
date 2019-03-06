@@ -12,18 +12,16 @@ struct SetGame {
     
     private(set) var cards = [Card](), chosenCards = [Card](), matchedCards = [Card](), playedCards = [Card?](repeating: nil, count: 24)
     
-    mutating func evaluateSet(at index: Int) {
-        chosenCards.append(cards[index])
-        //  IDEA: do not check whether there are 3 cards seleted. Only call chooseCard when the view controller makes sure three cards have been selected.
-        if chosenCards.count == 3 {
-            if checkSet(of: chosenCards) {
-                matchedCards += chosenCards
-                for card in chosenCards {
-                    let cardSpot = playedCards.index(of: card)!
-                    playedCards[cardSpot] = card
-                }
+    mutating func evaluateSet(of chosenCards: [Card]) {
+        print("============================")
+        print("chosen cards: \(chosenCards)")
+        print("============================")
+        if checkSet(of: chosenCards) {
+            matchedCards += chosenCards
+            for card in chosenCards {
+                let cardSpot = playedCards.index(of: card)!
+                playedCards[cardSpot] = nil
             }
-        chosenCards = []
         }
     }
     
