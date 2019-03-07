@@ -17,13 +17,19 @@ class ViewController: UIViewController {
 
     private lazy var game = SetGame()
     private var chosenButtons = [UIButton]()
+    private var setMatched = false
     private let cardColor = [#colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1), #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1), #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)]
     private let cardShape = ["●", "▲", "■"]
     
     @IBOutlet var cardButtons: [UIButton]!
     @IBOutlet weak var dealButton: UIButton!
+    @IBOutlet weak var matchResult: UILabel!
     
     @IBAction func chooseCard(_ sender: UIButton) {
+        if setMatched {
+            updateViewFromModel()
+            setMatched = false
+        }
         let cardNumber = cardButtons.index(of: sender)
         if (game.playedCards[cardNumber!] != nil) {
             if chosenButtons.contains(sender) {
@@ -38,14 +44,20 @@ class ViewController: UIViewController {
                         chosenCards.append(game.playedCards[cardNumber!]!)
                     }
                     // IDEA: if there is a match in set, next time when user chooseCard we should deselect all matched cards and call updateViewFromModel to reflect these should now be set to nil.
-                    game.evaluateSet(of: chosenCards)
+                    setMatched = game.evaluateSet(of: chosenCards)
+                    if setMatched {
+                        matchResult.text = "Matched!"
+                    } else {
+                        matchResult.text = "Mismatched!"
+                    }
                     updateChosenCards()
                     chosenButtons = [UIButton]()
                 } else {
                     updateChosenCards()
                 }
             }
-            updateViewFromModel()
+        } else {
+            updateChosenCards()
         }
     }
     

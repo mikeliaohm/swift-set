@@ -259,7 +259,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Whf-D2-Guz">
-                                <rect key="frame" x="17" y="729" width="151" height="49"/>
+                                <rect key="frame" x="17" y="729" width="110" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Start / Replay">
@@ -270,7 +270,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="45n-np-2BF">
-                                <rect key="frame" x="208" y="729" width="151" height="49"/>
+                                <rect key="frame" x="249" y="729" width="110" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Deal">
@@ -280,12 +280,20 @@
                                     <action selector="dealCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qdh-Ls-SzV"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2P-wF-Mcc">
+                                <rect key="frame" x="163" y="741" width="48" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="dealButton" destination="45n-np-2BF" id="Vny-aD-3FI"/>
+                        <outlet property="matchResult" destination="O2P-wF-Mcc" id="Pcq-23-dQh"/>
                         <outletCollection property="cardButtons" destination="Nhe-lk-x3B" collectionClass="NSMutableArray" id="Ml8-2Q-MBe"/>
                         <outletCollection property="cardButtons" destination="n4R-jR-XAJ" collectionClass="NSMutableArray" id="JkO-Fj-neP"/>
                         <outletCollection property="cardButtons" destination="xpz-gW-gMe" collectionClass="NSMutableArray" id="Qrn-cP-BCt"/>

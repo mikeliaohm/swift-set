@@ -12,7 +12,7 @@ struct SetGame {
     
     private(set) var cards = [Card](), chosenCards = [Card](), matchedCards = [Card](), playedCards = [Card?](repeating: nil, count: 24)
     
-    mutating func evaluateSet(of chosenCards: [Card]) {
+    mutating func evaluateSet(of chosenCards: [Card]) -> Bool {
         print("============================")
         print("chosen cards: \(chosenCards)")
         print("============================")
@@ -22,6 +22,9 @@ struct SetGame {
                 let cardSpot = playedCards.index(of: card)!
                 playedCards[cardSpot] = nil
             }
+            return true
+        } else {
+            return false
         }
     }
     
@@ -46,10 +49,11 @@ struct SetGame {
         let numberAttribute = chosenCards.map { $0.cardAttribute.number }
         let shadeAttribute = chosenCards.map { $0.cardAttribute.shade }
         let shapeAttribute = chosenCards.map { $0.cardAttribute.shape }
-        return Set(colorAttribute).setFormed &&
-            Set(numberAttribute).setFormed &&
-            Set(shadeAttribute).setFormed &&
-            Set(shapeAttribute).setFormed
+        return true
+//        return Set(colorAttribute).setFormed &&
+//            Set(numberAttribute).setFormed &&
+//            Set(shadeAttribute).setFormed &&
+//            Set(shapeAttribute).setFormed
     }
     
     init() {
