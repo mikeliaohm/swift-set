@@ -22,7 +22,11 @@ class ViewController: UIViewController {
     private let cardShape = ["●", "▲", "■"]
     
     @IBOutlet var cardButtons: [UIButton]!
-    @IBOutlet weak var dealButton: UIButton!
+    @IBOutlet weak var dealButton: UIButton! {
+        didSet {
+            dealButton.setTitle("Deal (\(game.cards.count))", for: UIControl.State.normal)
+        }
+    }
     @IBOutlet weak var matchResult: UILabel!
     
     @IBAction func chooseCard(_ sender: UIButton) {
@@ -31,37 +35,34 @@ class ViewController: UIViewController {
             setMatched = false
         }
         let cardNumber = cardButtons.index(of: sender)
+//        user can only select cards that are on display
         if (game.playedCards[cardNumber!] != nil) {
+//            user deselect card when the same card is selected again
             if chosenButtons.contains(sender) {
                 chosenButtons = chosenButtons.filter { $0 != sender }
-                updateChosenCards()
             } else {
                 chosenButtons.append(sender)
+//                game.evaluateSet is called when user selects 3 cards
                 if chosenButtons.count == 3 {
                     var chosenCards = [Card]()
                     for button in chosenButtons {
                         let cardNumber = cardButtons.index(of: button)
                         chosenCards.append(game.playedCards[cardNumber!]!)
                     }
-                    // IDEA: if there is a match in set, next time when user chooseCard we should deselect all matched cards and call updateViewFromModel to reflect these should now be set to nil.
                     setMatched = game.evaluateSet(of: chosenCards)
                     if setMatched {
                         matchResult.text = "Matched!"
+                        dealButton.setTitle("Deal (\(game.cards.count))", for: UIControl.State.normal)
                     } else {
                         matchResult.text = "Mismatched!"
                     }
-                    updateChosenCards()
-                    chosenButtons = [UIButton]()
-                } else {
-                    updateChosenCards()
                 }
             }
-        } else {
-            updateChosenCards()
         }
+       updateChosenCards(with: chosenButtons.count)
     }
     
-    private func updateChosenCards() {
+    private func updateChosenCards(with numberOfChosenButtons: Int) {
         for card in cardButtons {
             if chosenButtons.contains(card) {
                 card.layer.borderWidth = 3.0
@@ -70,6 +71,11 @@ class ViewController: UIViewController {
                 card.layer.borderWidth = 1.0
                 card.layer.borderColor = nil
             }
+        }
+        if numberOfChosenButtons == 3 {
+            chosenButtons = [UIButton]()
+        } else {
+            matchResult.text = ""
         }
     }
     
@@ -81,10 +87,15 @@ class ViewController: UIViewController {
     @IBAction func dealCard(_ sender: UIButton) {
         let numberOfFaceUpCards = game.playedCards.filter { $0 != nil }.count
         if numberOfFaceUpCards <= 21 {
-            game.dealCards(with: 3)
-            updateViewFromModel()
+            if game.cards.count != 0 {
+                game.dealCards(with: 3)
+                updateViewFromModel()
+                dealButton.setTitle("Deal (\(game.cards.count))", for: UIControl.State.normal)
+            } else {
+                dealButton.setTitle("Cards empty", for: UIControl.State.normal)
+            }
             if numberOfFaceUpCards == 21 {
-                dealButton.setTitle("Cards full", for: UIControl.State.normal)
+                dealButton.setTitle("Cards full (\(game.cards.count))", for: UIControl.State.normal)
             }
         }
     }
