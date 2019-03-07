@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         if (game.playedCards[cardNumber!] != nil) {
             if chosenButtons.contains(sender) {
                 chosenButtons = chosenButtons.filter { $0 != sender }
+                updateChosenCards()
             } else {
                 chosenButtons.append(sender)
                 if chosenButtons.count == 3 {
@@ -38,9 +39,13 @@ class ViewController: UIViewController {
                     }
                     // IDEA: if there is a match in set, next time when user chooseCard we should deselect all matched cards and call updateViewFromModel to reflect these should now be set to nil.
                     game.evaluateSet(of: chosenCards)
+                    updateChosenCards()
+                    chosenButtons = [UIButton]()
+                } else {
+                    updateChosenCards()
                 }
             }
-            updateChosenCards()
+            updateViewFromModel()
         }
     }
     
