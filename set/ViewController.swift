@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     private lazy var game = SetGame()
     private var chosenButtons = [UIButton]()
     private var setMatched = false
-    private let cardColor = [#colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1), #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1), #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)]
+    private let cardColor = [#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)]
     private let cardShape = ["●", "▲", "■"]
     
     @IBOutlet var cardButtons: [UIButton]!
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
                 card.layer.borderWidth = 3.0
                 card.layer.borderColor = UIColor.blue.cgColor
             } else {
-                card.layer.borderWidth = 1.0
+                card.layer.borderWidth = 0.0
                 card.layer.borderColor = nil
             }
         }
@@ -100,29 +100,40 @@ class ViewController: UIViewController {
         }
     }
     
-//    private func disableDealButton() {
-//    }
-    
     private func updateViewFromModel() {
+        var displayNumber: String
         var displayShape: String
         var displayFill: Float
-        var displayShade = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         var displayColor: UIColor
+        
+        let faceUpCardIndices = game.playedCards.filter { $0 != nil }.indices
+        for cardIndex in faceUpCardIndices {
+            cardButtons[cardIndex].backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.0981645976)
+        }
         
         for index in cardButtons.indices {
             let button = cardButtons[index]
             let card = game.playedCards[index]
-
+            button.setTitle("", for: UIControl.State.normal)
+            
+            switch card?.cardAttribute.number {
+            case .choiceOne?:
+                displayNumber = "1"
+            case .choiceTwo?:
+                displayNumber = "2"
+            case .choiceThree?:
+                displayNumber = "3"
+            default:
+                displayNumber = ""
+            }
+            
             switch card?.cardAttribute.color {
             case .choiceOne?:
                 displayColor = cardColor[0]
-//                    button.backgroundColor = cardColor[0]
             case .choiceTwo?:
                 displayColor = cardColor[1]
-//                    button.backgroundColor = cardColor[1]
             case .choiceThree?:
                 displayColor = cardColor[2]
-//                    button.backgroundColor = cardColor[2]
             case .none:
                 displayColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
             }
@@ -141,7 +152,7 @@ class ViewController: UIViewController {
             switch card?.cardAttribute.shade {
             case .choiceOne?:
                 displayFill = -1.0
-                displayShade = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.15)
+                displayColor = displayColor.withAlphaComponent(0.15)
             case .choiceTwo?:
                 displayFill = -1.0
             case .choiceThree?:
@@ -153,11 +164,10 @@ class ViewController: UIViewController {
             let attributes: [NSAttributedString.Key:Any] = [
                 .strokeColor : displayColor,
                 .strokeWidth : displayFill,
-                .foregroundColor: displayShade
+                .foregroundColor: displayColor,
             ]
-            let attributedString = NSAttributedString(string: displayShape, attributes: attributes)
+            let attributedString = NSAttributedString(string: displayShape + " " + displayNumber, attributes: attributes)
             button.setAttributedTitle(attributedString, for: UIControl.State.normal)
-//            button.backgroundColor = (card != nil) ? #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0)
         }
     }
 }

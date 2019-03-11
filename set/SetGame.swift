@@ -49,11 +49,11 @@ struct SetGame {
         let numberAttribute = chosenCards.map { $0.cardAttribute.number }
         let shadeAttribute = chosenCards.map { $0.cardAttribute.shade }
         let shapeAttribute = chosenCards.map { $0.cardAttribute.shape }
-        return true
-//        return Set(colorAttribute).setFormed &&
-//            Set(numberAttribute).setFormed &&
-//            Set(shadeAttribute).setFormed &&
-//            Set(shapeAttribute).setFormed
+//        return true
+        return Set(colorAttribute).setFormed &&
+            Set(numberAttribute).setFormed &&
+            Set(shadeAttribute).setFormed &&
+            Set(shapeAttribute).setFormed
     }
     
     init() {
