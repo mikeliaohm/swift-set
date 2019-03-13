@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     private let cardShape = ["●", "▲", "■"]
     
     @IBOutlet var cardButtons: [UIButton]!
+    
     @IBOutlet weak var dealButton: UIButton! {
         didSet {
             dealButton.setTitle("Deal (\(game.cards.count))", for: UIControl.State.normal)
@@ -108,7 +109,7 @@ class ViewController: UIViewController {
         
         let faceUpCardIndices = game.playedCards.filter { $0 != nil }.indices
         for cardIndex in faceUpCardIndices {
-            cardButtons[cardIndex].backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.0981645976)
+            cardButtons[cardIndex].backgroundColor = #colorLiteral(red: 0.8804528871, green: 0.8804528871, blue: 0.8804528871, alpha: 0.0981645976)
         }
         
         for index in cardButtons.indices {
