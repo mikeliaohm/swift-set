@@ -43,6 +43,12 @@ struct SetGame {
         print("cards left: \(cards.count)")
     }
     
+    mutating func autoSearchSet() {
+        //  IDEA: iterate through all combinations of draws of 2 cards and figure out the only card that can form a set with the draw.
+        //  IDEA: locate the only card with the corresponding attributes (color, number, shade, and shape) and find its index in array cards. Finally, see if the only card exists in playedCard array.
+        //  IDEA: the maximum iteration it will run will C(24, 2) = 276
+    }
+    
     private mutating func checkSet(of chosenCards: [Card]) -> Bool {
         //  IDEA: use Set(Array) to check whether arrays formed from card's four attribute have all equal elements or all unqiue elements. Set(Array).count == 1 or Set(Array).count == 3
         let colorAttribute = chosenCards.map { $0.cardAttribute.color }
