@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct Card {
+struct Card: Equatable {
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+    
     
     private var identifier: Int
     private(set) var cardAttribute: CardAttribute
@@ -17,6 +21,9 @@ struct Card {
     private static func getUniqueIdentifier() -> Int {
         identifierFactory += 1
 //        assert that only 81 cards are allowed to be init'ed
+        if identifierFactory == 82 {
+            identifierFactory = 1
+        }
         assert(identifierFactory <= 81, "Card init exceeding range, only 81 cards are available")
         return identifierFactory
     }
