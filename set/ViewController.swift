@@ -124,49 +124,34 @@ class ViewController: UIViewController {
             let card = game.playedCards[index]
             button.setTitle("", for: UIControl.State.normal)
             
+            switch card?.cardAttribute.shape {
+            case .choiceOne?: displayShape = cardShape[0]
+            case .choiceTwo?: displayShape = cardShape[1]
+            case .choiceThree?: displayShape = cardShape[2]
+            default: displayShape = ""
+            }
+            
             switch card?.cardAttribute.number {
-            case .choiceOne?:
-                displayNumber = "1"
-            case .choiceTwo?:
-                displayNumber = "2"
-            case .choiceThree?:
-                displayNumber = "3"
-            default:
-                displayNumber = ""
+            case .choiceOne?: displayNumber = displayShape
+            case .choiceTwo?: displayNumber = "\(displayShape) \(displayShape)"
+            case .choiceThree?: displayNumber = "\(displayShape) \(displayShape) \(displayShape)"
+            default: displayNumber = ""
             }
             
             switch card?.cardAttribute.color {
-            case .choiceOne?:
-                displayColor = cardColor[0]
-            case .choiceTwo?:
-                displayColor = cardColor[1]
-            case .choiceThree?:
-                displayColor = cardColor[2]
-            case .none:
-                displayColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-            }
-            
-            switch card?.cardAttribute.shape {
-            case .choiceOne?:
-                displayShape = cardShape[0]
-            case .choiceTwo?:
-                displayShape = cardShape[1]
-            case .choiceThree?:
-                displayShape = cardShape[2]
-            default:
-                displayShape = ""
+            case .choiceOne?: displayColor = cardColor[0]
+            case .choiceTwo?: displayColor = cardColor[1]
+            case .choiceThree?: displayColor = cardColor[2]
+            case .none: displayColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
             }
             
             switch card?.cardAttribute.shade {
             case .choiceOne?:
                 displayFill = -1.0
                 displayColor = displayColor.withAlphaComponent(0.15)
-            case .choiceTwo?:
-                displayFill = -1.0
-            case .choiceThree?:
-                displayFill = 5.0
-            default:
-                displayFill = 5.0
+            case .choiceTwo?: displayFill = -1.0
+            case .choiceThree?: displayFill = 5.0
+            default: displayFill = 5.0
             }
             
             let attributes: [NSAttributedString.Key:Any] = [
@@ -174,7 +159,7 @@ class ViewController: UIViewController {
                 .strokeWidth : displayFill,
                 .foregroundColor: displayColor,
             ]
-            let attributedString = NSAttributedString(string: displayShape + " " + displayNumber, attributes: attributes)
+            let attributedString = NSAttributedString(string: displayNumber, attributes: attributes)
             button.setAttributedTitle(attributedString, for: UIControl.State.normal)
         }
     }
