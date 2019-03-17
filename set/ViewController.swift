@@ -107,11 +107,18 @@ class ViewController: UIViewController {
         var displayFill: Float
         var displayColor: UIColor
         
-        let faceUpCardIndices = game.playedCards.filter { $0 != nil }.indices
-        for cardIndex in faceUpCardIndices {
-            cardButtons[cardIndex].backgroundColor = #colorLiteral(red: 0.8804528871, green: 0.8804528871, blue: 0.8804528871, alpha: 0.0981645976)
+        for cardIndex in game.playedCards.indices
+        {
+            if game.playedCards[cardIndex] == nil {
+                cardButtons[cardIndex].backgroundColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
+            } else {
+                cardButtons[cardIndex].backgroundColor = #colorLiteral(red: 0.8804528871, green: 0.8804528871, blue: 0.8804528871, alpha: 0.0981645976)
+            }
         }
-        
+//        for cardIndex in faceUpCardIndices {
+//            cardButtons[cardIndex].backgroundColor = #colorLiteral(red: 0.8804528871, green: 0.8804528871, blue: 0.8804528871, alpha: 0.0981645976)
+//        }
+//
         for index in cardButtons.indices {
             let button = cardButtons[index]
             let card = game.playedCards[index]
