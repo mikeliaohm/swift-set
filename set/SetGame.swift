@@ -45,25 +45,29 @@ struct SetGame {
 
     private mutating func checkSet(of chosenCards: [Card]) -> Bool {
         //  IDEA: use Set(Array) to check whether arrays formed from card's four attribute have all equal elements or all unqiue elements. Set(Array).count == 1 or Set(Array).count == 3
-        let colorAttribute = chosenCards.map { $0.cardAttribute.color }
-        let numberAttribute = chosenCards.map { $0.cardAttribute.number }
-        let shadeAttribute = chosenCards.map { $0.cardAttribute.shade }
-        let shapeAttribute = chosenCards.map { $0.cardAttribute.shape }
+        let colorAttribute = chosenCards.map { $0.color }
+        let numberAttribute = chosenCards.map { $0.number }
+        let shadeAttribute = chosenCards.map { $0.shade }
+        let shapeAttribute = chosenCards.map { $0.shape }
         return Set(colorAttribute).setFormed &&
             Set(numberAttribute).setFormed &&
             Set(shadeAttribute).setFormed &&
             Set(shapeAttribute).setFormed
     }
 
-//    init() {
-//        // initiate 81 cards in the set game
-//        for _ in 1...81 {
-//            let card = Card()
-//            cards += [card]
-//        }
-//        cards = cards.shuffled()
-//        dealCards(with: 12)
-//    }
+    init() {
+        for color in Card.Attributes.all {
+            for number in Card.Attributes.all {
+                for shade in Card.Attributes.all {
+                    for shape in Card.Attributes.all {
+                        cards.append(Card(color: color, number: number, shade: shade, shape: shape))
+                    }
+                }
+            }
+        }
+        cards = cards.shuffled()
+        dealCards(with: 12)
+    }
 
 }
 
