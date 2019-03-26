@@ -8,6 +8,7 @@
 
 import UIKit
 
+@IBDesignable
 class SetCardView: UIView {
 
     /*
@@ -17,5 +18,21 @@ class SetCardView: UIView {
         // Drawing code
     }
     */
-
+    lazy var gridFrame = bounds
+    
+    override func draw(_ rect: CGRect) {
+        let grid = Grid(layout: Grid.Layout.dimensions(rowCount: 5, columnCount: 5), frame: gridFrame)
+        
+        let roundedRectOne = UIBezierPath(roundedRect: grid[1, 1]!, cornerRadius: 0.0)
+        let roundedRectTwo = UIBezierPath(roundedRect: grid[1, 2]!, cornerRadius: 0.0)
+        let roundedRectThree = UIBezierPath(roundedRect: grid[0, 0]!, cornerRadius: 0.0)
+        let roundedRectFour = UIBezierPath(roundedRect: grid[4, 4]!, cornerRadius: 0.0)
+        let roundedRectFive = UIBezierPath(roundedRect: grid[3, 0]!, cornerRadius: 0.0)
+        UIColor.green.setFill()
+        roundedRectOne.fill()
+        roundedRectTwo.fill()
+        roundedRectThree.fill()
+        roundedRectFour.fill()
+        roundedRectFive.fill()
+    }
 }
