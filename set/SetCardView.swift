@@ -20,35 +20,57 @@ class SetCardView: UIView {
     */
     lazy var gridFrame = bounds
     
+    private func drawDiamondShape(cellFrame frame: UIBezierPath) -> UIBezierPath {
+
+        let diamondPath = UIBezierPath()
+        
+        diamondPath.move(to: CGPoint(x: frame.startingPointX + frame.cellWidth / 2 - frame.spaceToCorner, y: frame.startingPointY))
+        diamondPath.addLine(to: CGPoint(x: frame.startingPointX, y: frame.startingPointY - frame.shapeHeight / 2))
+        diamondPath.addLine(to: CGPoint(x: frame.startingPointX - frame.cellWidth / 2 + frame.spaceToCorner, y: frame.startingPointY))
+        diamondPath.addLine(to: CGPoint(x: frame.startingPointX, y: frame.startingPointY + frame.shapeHeight / 2))
+        diamondPath.close()
+        return diamondPath
+    }
+    
     override func draw(_ rect: CGRect) {
         let grid = Grid(layout: Grid.Layout.dimensions(rowCount: 2, columnCount: 2), frame: gridFrame)
 
-        let roundedRectOne = UIBezierPath(roundedRect: grid[0, 1]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
+        let roundedRect = UIBezierPath(roundedRect: grid[0, 1]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
         UIColor.green.setFill()
-        roundedRectOne.fill()
-
-        print("\(grid[2]?.height)")
-        let path = UIBezierPath()
-        path.addArc(withCenter: CGPoint(x: 100, y: 100), radius: 50.0, startAngle: 0, endAngle: 90, clockwise: true)
-        path.lineWidth = 5.0
-        UIColor.red.setFill()
-        UIColor.black.setStroke()
-        path.stroke()
+        roundedRect.fill()
         
-//        let path: UIBezierPath = path.copy() as! UIBezierPath
-        path.apply(CGAffineTransform.identity.translatedBy(x: 50, y: 50))
-        path.stroke()
-        path.apply(CGAffineTransform.identity.translatedBy(x: 50, y: 50))
-        
-        path.apply(CGAffineTransform.identity.translatedBy(x: 50, y: 50))
-        path.stroke()
-        
-        let diamondPath = UIBezierPath()
-        diamondPath.move(to: CGPoint.zero)
-        diamondPath.addLine(to: CGPoint(x: 500, y: 500))
+        let diamondPath = drawDiamondShape(cellFrame: roundedRect)
         diamondPath.stroke()
         
-        
-        
+//        diamondPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: shapeHeight + cellHeight / spaceRatio))
+//        diamondPath.stroke()
+//
+//        diamondPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: -(shapeHeight + cellHeight / spaceRatio) * 2))
+//        diamondPath.stroke()
+    }
+}
+
+extension UIBezierPath {
+    private struct SizeRatio {
+        static let spaceRatio: CGFloat = 10
+    }
+    
+    var cellWidth: CGFloat {
+        return bounds.width
+    }
+    var cellHeight: CGFloat {
+        return bounds.height
+    }
+    var shapeHeight: CGFloat {
+        return (cellHeight - (cellHeight / SizeRatio.spaceRatio) * 4) / 3
+    }
+    var startingPointY: CGFloat {
+        return bounds.midY
+    }
+    var startingPointX: CGFloat {
+        return bounds.midX
+    }
+    var spaceToCorner: CGFloat {
+        return cellWidth / SizeRatio.spaceRatio
     }
 }
