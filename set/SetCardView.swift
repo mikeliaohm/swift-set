@@ -32,8 +32,20 @@ class SetCardView: UIView {
         return diamondPath
     }
     
+    private func drawOvalShape(cellFrame frame: UIBezierPath) -> UIBezierPath {
+        let rectShape = CGRect(x: frame.startingPointX - frame.cellWidth / 2 + frame.spaceToCorner, y: frame.startingPointY - frame.shapeHeight / 3, width: frame.cellWidth - frame.spaceToCorner * 2, height: frame.shapeHeight / 3 * 2)
+        let ovalPath = UIBezierPath(roundedRect: rectShape, cornerRadius: frame.shapeHeight / 5)
+        return ovalPath
+    }
+    
+    private func drawSquiggleShape(cellFrame frame: UIBezierPath) -> UIBezierPath {
+        let squigglePath = UIBezierPath(arcCenter: CGPoint(x: frame.startingPointX, y: frame.startingPointY), radius: frame.shapeHeight / 3, startAngle: 0, endAngle: 90, clockwise: true)
+
+        return squigglePath
+    }
+    
     override func draw(_ rect: CGRect) {
-        let grid = Grid(layout: Grid.Layout.dimensions(rowCount: 2, columnCount: 2), frame: gridFrame)
+        let grid = Grid(layout: Grid.Layout.dimensions(rowCount: 3, columnCount: 3), frame: gridFrame)
 
         let roundedRect = UIBezierPath(roundedRect: grid[0, 1]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
         UIColor.green.setFill()
@@ -41,12 +53,27 @@ class SetCardView: UIView {
         
         let diamondPath = drawDiamondShape(cellFrame: roundedRect)
         diamondPath.stroke()
+        diamondPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: roundedRect.shapeHeight + roundedRect.spaceToCorner))
+        diamondPath.stroke()
         
-//        diamondPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: shapeHeight + cellHeight / spaceRatio))
-//        diamondPath.stroke()
-//
-//        diamondPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: -(shapeHeight + cellHeight / spaceRatio) * 2))
-//        diamondPath.stroke()
+        diamondPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: -(roundedRect.shapeHeight + roundedRect.spaceToCorner) * 2))
+        diamondPath.stroke()
+        
+        
+        
+        let roundedRectTwo = UIBezierPath(roundedRect: grid[1, 0]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
+        UIColor.green.setFill()
+        roundedRectTwo.fill()
+        
+        let ovalPath = drawOvalShape(cellFrame: roundedRectTwo)
+        ovalPath.stroke()
+
+        let roundedRectThree = UIBezierPath(roundedRect: grid[2, 2]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
+        UIColor.green.setFill()
+        roundedRectThree.fill()
+        
+        let squigglePath = drawSquiggleShape(cellFrame: roundedRectThree)
+        squigglePath.stroke()
     }
 }
 
@@ -62,7 +89,10 @@ extension UIBezierPath {
         return bounds.height
     }
     var shapeHeight: CGFloat {
-        return (cellHeight - (cellHeight / SizeRatio.spaceRatio) * 4) / 3
+        return (cellHeight - spaceToCorner * 4) / 3
+    }
+    var shapeWidth: CGFloat {
+        return cellWidth - spaceToCorner * 2
     }
     var startingPointY: CGFloat {
         return bounds.midY
