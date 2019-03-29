@@ -11,18 +11,10 @@ import UIKit
 @IBDesignable
 class SetCardView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    */
     var deck = SetCardDeck()
-    lazy var gridFrame = bounds
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        let cardsDrawn = deck.dealCards(with: 12)
-//        print("\(cardsDrawn)")
-//    }
+    private var setMatched = false
+    private lazy var gridFrame = bounds
+    private lazy var game = SetGame()
     
     private func drawCardPattern(cellFrame frame: UIBezierPath, card: Card) {
         
@@ -112,17 +104,20 @@ class SetCardView: UIView {
     override func draw(_ rect: CGRect) {
         let grid = Grid(layout: Grid.Layout.dimensions(rowCount: 4, columnCount: 3), frame: gridFrame)
         
-        
         let cards = deck.dealCards(with: 12)
         for (index, card) in cards.enumerated() {
             let cellFrame = UIBezierPath(roundedRect: grid[index]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
             UIColor.black.setStroke()
             cellFrame.lineWidth = 3.0
             cellFrame.stroke()
+            
+            let cellRect = CGRect(x: cellFrame.bounds.midX, y: cellFrame.bounds.minY, width: cellFrame.cellWidth, height: cellFrame.cellHeight)
+            let cellButton = UIButton(frame: cellRect)
+            addSubview(cellButton)
             drawCardPattern(cellFrame: cellFrame, card: card)
         }
-        print("\(cards)")
-
+        
+        print("\(self.subviews)")
     }
 }
 

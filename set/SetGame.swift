@@ -10,7 +10,7 @@ import Foundation
 
 struct SetGame {
 
-    private(set) var cards = [Card](), chosenCards = [Card](), matchedCards = [Card](), playedCards = [Card?](repeating: nil, count: 24)
+    private(set) var cards = [Card](), chosenCards = [Card](), matchedCards = [Card](), playedCards = [Card?](repeating: nil, count: 81)
 
     mutating func evaluateSet(of chosenCards: [Card]) -> Bool {
         print("============================")
@@ -30,7 +30,7 @@ struct SetGame {
 
     mutating func dealCards(with numberOfCards: Int) {
         // check if playedCards contain any matchedCards. If so replace those cards with cards to deal
-        assert(playedCards.filter({ $0 != nil }).count <= 24, "You can not have more than 24 cards played simuteneously.")
+        assert(playedCards.filter({ $0 != nil }).count <= 81, "You can not have more than 81 cards played simuteneously.")
 
         let cardsDealt = Array(cards[0...numberOfCards-1])
             // find the chosenCards in playedCards and replace that with cardsDealt
