@@ -14,56 +14,61 @@ class SetCardView: UIView {
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
     */
+    var deck = SetCardDeck()
     lazy var gridFrame = bounds
     
-    private func drawCard(cellFrame frame: UIBezierPath, _ card: Card?) {
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        let cardsDrawn = deck.dealCards(with: 12)
+//        print("\(cardsDrawn)")
+//    }
+    
+    private func drawCardPattern(cellFrame frame: UIBezierPath, card: Card) {
         
         var cardPatternPaths = [UIBezierPath]()
         var cardPatternPath = UIBezierPath()
-        let cardPatternColor: UIColor
+        var cardPatternColor: UIColor
         
-        switch card?.shade {
-        case .choiceOne?: cardPatternPath = drawDiamondPath(cellFrame: frame)
-        case .choiceTwo?: cardPatternPath = drawOvalPath(cellFrame: frame)
-        case .choiceThree?: cardPatternPath = drawSquigglePath(cellFrame: frame)
-        default:
-            break
+        switch card.shape {
+        case .choiceOne: cardPatternPath = drawDiamondPath(cellFrame: frame)
+        case .choiceTwo: cardPatternPath = drawOvalPath(cellFrame: frame)
+        case .choiceThree: cardPatternPath = drawSquigglePath(cellFrame: frame)
         }
         
-        switch card?.color {
-        case .choiceOne?: cardPatternColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
-        case .choiceTwo?: cardPatternColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
-        case .choiceThree?: cardPatternColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
-        default: break
+        switch card.color {
+        case .choiceOne: cardPatternColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        case .choiceTwo: cardPatternColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        case .choiceThree: cardPatternColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         }
         
-        switch card?.number {
-        case .choiceOne?: cardPatternPaths.append(cardPatternPath)
-        case .choiceTwo?:
+        let pathTwo = cardPatternPath.copy() as! UIBezierPath
+        let pathThree = cardPatternPath.copy() as! UIBezierPath
+        
+        switch card.number {
+        case .choiceOne: cardPatternPaths.append(cardPatternPath)
+        case .choiceTwo:
+            cardPatternPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: -frame.spaceToCorner * 2.5))
+            cardPatternPaths.append(pathTwo)
             cardPatternPaths.append(cardPatternPath)
-            cardPatternPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: -(frame.shapeHeight + frame.spaceToCorner) * 2))
+            pathTwo.apply(CGAffineTransform.identity.translatedBy(x: 0, y: frame.spaceToCorner * 2.5))
+            cardPatternPaths.append(pathTwo)
+        case .choiceThree:
             cardPatternPaths.append(cardPatternPath)
-        case .choiceThree?:
-            cardPatternPaths.append(cardPatternPath)
-            cardPatternPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: -(frame.shapeHeight + frame.spaceToCorner) * 2))
-            cardPatternPaths.append(cardPatternPath)
-            cardPatternPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: -(frame.shapeHeight + frame.spaceToCorner) * 2))
-            cardPatternPaths.append(cardPatternPath)
-        default: break
+            pathTwo.apply(CGAffineTransform.identity.translatedBy(x: 0, y: -(frame.shapeHeight + frame.spaceToCorner)))
+            cardPatternPaths.append(pathTwo)
+            pathThree.apply(CGAffineTransform.identity.translatedBy(x: 0, y: (frame.shapeHeight + frame.spaceToCorner)))
+            cardPatternPaths.append(pathThree)
         }
         
         cardPatternColor.setStroke()
         cardPatternColor.setFill()
         
         for path in cardPatternPaths {
-            switch card?.shade {
-            case .choiceOne?: path.stroke()
-            case .choiceTwo?: path.fill()
-            case .choiceThree?:
+            switch card.shade {
+            case .choiceOne: path.stroke()
+            case .choiceTwo: path.fill()
+            case .choiceThree:
                 path.stroke()
                 let context = UIGraphicsGetCurrentContext()
                 context?.saveGState()
@@ -76,7 +81,6 @@ class SetCardView: UIView {
                 }
                 stripes.stroke()
                 context?.restoreGState()
-            default: break
             }
         }
     }
@@ -106,46 +110,19 @@ class SetCardView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        let grid = Grid(layout: Grid.Layout.dimensions(rowCount: 3, columnCount: 3), frame: gridFrame)
+        let grid = Grid(layout: Grid.Layout.dimensions(rowCount: 4, columnCount: 3), frame: gridFrame)
         
-        let roundedRect = UIBezierPath(roundedRect: grid[0, 1]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
-        UIColor.green.setFill()
-        roundedRect.fill()
         
-        let diamondPath = drawDiamondShape(cellFrame: roundedRect)
-        diamondPath.stroke()
-        diamondPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: roundedRect.shapeHeight + roundedRect.spaceToCorner))
-        diamondPath.stroke()
-        
-        let context = UIGraphicsGetCurrentContext()
-        context?.saveGState()
-        diamondPath.addClip()
-
-        let stripes = UIBezierPath()
-        for i in stride(from: roundedRect.bounds.minX, to: roundedRect.bounds.maxX, by: 10) {
-            stripes.move(to: CGPoint(x: i, y: roundedRect.bounds.minY))
-            stripes.addLine(to: CGPoint(x: i, y: roundedRect.bounds.maxY))
+        let cards = deck.dealCards(with: 12)
+        for (index, card) in cards.enumerated() {
+            let cellFrame = UIBezierPath(roundedRect: grid[index]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
+            UIColor.black.setStroke()
+            cellFrame.lineWidth = 3.0
+            cellFrame.stroke()
+            drawCardPattern(cellFrame: cellFrame, card: card)
         }
-        stripes.stroke()
-        
-        context?.restoreGState()
-        
-        diamondPath.apply(CGAffineTransform.identity.translatedBy(x: 0, y: -(roundedRect.shapeHeight + roundedRect.spaceToCorner) * 2))
-        diamondPath.stroke()
-        
-        let roundedRectTwo = UIBezierPath(roundedRect: grid[1, 0]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
-        UIColor.green.setFill()
-        roundedRectTwo.fill()
-        
-        let ovalPath = drawOvalShape(cellFrame: roundedRectTwo)
-        ovalPath.stroke()
+        print("\(cards)")
 
-        let roundedRectThree = UIBezierPath(roundedRect: grid[2, 2]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
-        UIColor.green.setFill()
-        roundedRectThree.fill()
-        
-        let squigglePath = drawSquiggleShape(cellFrame: roundedRectThree)
-        squigglePath.stroke()
     }
 }
 
