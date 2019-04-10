@@ -12,6 +12,7 @@ import UIKit
 class SetCardView: UIView {
 
     var deck = SetCardDeck()
+    var isFaceUp = false
     private var setMatched = false
     private lazy var gridFrame = bounds
     private lazy var game = SetGame()
@@ -116,8 +117,15 @@ class SetCardView: UIView {
             addSubview(cellButton)
             drawCardPattern(cellFrame: cellFrame, card: card)
         }
-        
-        print("\(self.subviews)")
+    }
+    
+    @objc func tapCard(byHandlingGestureRecognizedBy recognizer: UITapGestureRecognizer) {
+
+        if recognizer.state == .ended {
+            isFaceUp = !isFaceUp
+            let tapLocation = recognizer.location(in: nil)
+            print("print subviews after tap: \(tapLocation)")
+        }
     }
 }
 

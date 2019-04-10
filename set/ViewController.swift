@@ -16,8 +16,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let cardsDealt = deck.dealCards(with: 12)
-        print("\(cardsDealt)")
     }
+    
+    
+    @IBOutlet weak var setCardView: SetCardView! {
+        didSet {
+            let tap = UITapGestureRecognizer(target: setCardView, action: #selector(SetCardView.tapCard(byHandlingGestureRecognizedBy: )))
+            setCardView.addGestureRecognizer(tap)
+        }
+    }
+    
 //
 //    private lazy var game = SetGame()
 //    private var chosenButtons = [UIButton]()
