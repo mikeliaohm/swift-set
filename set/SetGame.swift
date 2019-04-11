@@ -10,18 +10,11 @@ import Foundation
 
 struct SetGame {
 
-    private(set) var cards = [Card](), chosenCards = [Card](), matchedCards = [Card](), playedCards = [Card?](repeating: nil, count: 81)
-
+    private(set) var cards = [Card](), matchedCards = [Card](), playedCards = [Card?](repeating: nil, count: 81)
+    
     mutating func evaluateSet(of chosenCards: [Card]) -> Bool {
-        print("============================")
-        print("chosen cards: \(chosenCards)")
-        print("============================")
         if checkSet(of: chosenCards) {
             matchedCards += chosenCards
-            for card in chosenCards {
-                let cardSpot = playedCards.index(of: card)!
-                playedCards[cardSpot] = nil
-            }
             return true
         } else {
             return false

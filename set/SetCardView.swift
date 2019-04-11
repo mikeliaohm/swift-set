@@ -11,11 +11,84 @@ import UIKit
 @IBDesignable
 class SetCardView: UIView {
 
-    var deck = SetCardDeck()
-    var isSelected = false
+    private var deck = SetCardDeck()
     private var setMatched = false
+    private var cardsPlayed = [Card]()
+    private var cellButtons = [UIButton]()
+    private var chosenCardIndics = [Int]()
     private lazy var gridFrame = bounds
     private lazy var game = SetGame()
+    
+
+    @objc func tapCard(sender: UITapGestureRecognizer) {
+
+        if setMatched {
+//            renderSetCardView()
+            setMatched = false
+        }
+
+        if sender.state == .ended {
+            if let tappedCardIndex = cellButtons.index(of: sender.view as! UIButton) {
+                if chosenCardIndics.contains(tappedCardIndex) {
+                    chosenCardIndics = chosenCardIndics.filter { $0 != tappedCardIndex }
+                } else {
+                    chosenCardIndics.append(tappedCardIndex)
+                }
+                if chosenCardIndics.count == 3 {
+                    var chosenCards = [Card]()
+                    for cardIndex in chosenCardIndics { chosenCards.append(cardsPlayed[cardIndex]) }
+                    setMatched = game.evaluateSet(of: chosenCards)
+                    if setMatched {
+                        print("game matched!")
+                    } else {
+                        print("game mismatched!")
+                    }
+                }
+            }
+        }
+        updateChosenCardView()
+    }
+    
+    private func updateChosenCardView() {
+        for index in 0..<cardsPlayed.count {
+            if chosenCardIndics.contains(index) {
+                cellButtons[index].layer.borderWidth = 6.0
+                cellButtons[index].layer.borderColor = UIColor.blue.cgColor
+            } else {
+                cellButtons[index].layer.borderWidth = 0.0
+                cellButtons[index].layer.borderColor = nil
+            }
+        }
+        if chosenCardIndics.count == 3 {
+            if setMatched {
+                //                TODO: cardsDisplayed be rid off matchedCards
+            }
+            chosenCardIndics = [Int]()
+        } else {
+            print("select \(3 - chosenCardIndics.count) card(s) to evaluate a set.")
+        }
+    }
+    
+    override func draw(_ rect: CGRect) {
+        let grid = Grid(layout: Grid.Layout.dimensions(rowCount: 4, columnCount: 3), frame: gridFrame)
+        
+        cardsPlayed += deck.dealCards(with: 12)
+        //        TODO: the above should be cardsDisplayed = deck.cardsPlayed
+        for (index, card) in cardsPlayed.enumerated() {
+            let cellFrame = UIBezierPath(roundedRect: grid[index]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
+            UIColor.black.setStroke()
+            cellFrame.lineWidth = 3.0
+            cellFrame.stroke()
+            
+            let cellRect = CGRect(x: cellFrame.bounds.minX, y: cellFrame.bounds.minY, width: cellFrame.cellWidth, height: cellFrame.cellHeight)
+            let cellButton = UIButton(frame: cellRect)
+            addSubview(cellButton)
+            drawCardPattern(cellFrame: cellFrame, card: card)
+            let tap = UITapGestureRecognizer(target: self, action: #selector(tapCard))
+            cellButton.addGestureRecognizer(tap)
+            cellButtons.append(cellButton)
+        }
+    }
     
     private func drawCardPattern(cellFrame frame: UIBezierPath, card: Card) {
         
@@ -79,7 +152,7 @@ class SetCardView: UIView {
     }
     
     private func drawDiamondPath(cellFrame frame: UIBezierPath) -> UIBezierPath {
-
+        
         let diamondPath = UIBezierPath()
         
         diamondPath.move(to: CGPoint(x: frame.startingPointX + frame.cellWidth / 2 - frame.spaceToCorner, y: frame.startingPointY))
@@ -98,37 +171,10 @@ class SetCardView: UIView {
     
     private func drawSquigglePath(cellFrame frame: UIBezierPath) -> UIBezierPath {
         let squigglePath = UIBezierPath(arcCenter: CGPoint(x: frame.startingPointX, y: frame.startingPointY), radius: frame.shapeHeight / 3, startAngle: 0, endAngle: 90, clockwise: true)
-
+        
         return squigglePath
     }
     
-    override func draw(_ rect: CGRect) {
-        let grid = Grid(layout: Grid.Layout.dimensions(rowCount: 4, columnCount: 3), frame: gridFrame)
-        
-        let cards = deck.dealCards(with: 12)
-        for (index, card) in cards.enumerated() {
-            let cellFrame = UIBezierPath(roundedRect: grid[index]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
-            UIColor.black.setStroke()
-            cellFrame.lineWidth = 3.0
-            cellFrame.stroke()
-            
-            let cellRect = CGRect(x: cellFrame.bounds.midX, y: cellFrame.bounds.minY, width: cellFrame.cellWidth, height: cellFrame.cellHeight)
-            let cellButton = UIButton(frame: cellRect)
-            addSubview(cellButton)
-            drawCardPattern(cellFrame: cellFrame, card: card)
-            let tap = UITapGestureRecognizer(target: self, action: #selector(tapCard))
-            cellButton.addGestureRecognizer(tap)
-        }
-    }
-    
-    @objc func tapCard(sender: UITapGestureRecognizer) {
-
-        if sender.state == .ended {
-            isSelected = !isSelected
-            let tapView = sender.view?.frame
-            print("print subviews after tap: \(tapView)")
-        }
-    }
 }
 
 extension UIBezierPath {
