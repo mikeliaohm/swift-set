@@ -19,12 +19,12 @@ class ViewController: UIViewController {
     }
     
     
-    @IBOutlet weak var setCardView: SetCardView! {
-        didSet {
-            let tap = UITapGestureRecognizer(target: setCardView, action: #selector(SetCardView.tapCard(byHandlingGestureRecognizedBy: )))
-            setCardView.addGestureRecognizer(tap)
-        }
-    }
+//    @IBOutlet weak var setCardView: SetCardView! {
+//        didSet {
+//            let tap = UITapGestureRecognizer(target: setCardView, action: #selector(SetCardView.tapCard(byHandlingGestureRecognizedBy: )))
+//            setCardView.addGestureRecognizer(tap)
+//        }
+//    }
     
 //
 //    private lazy var game = SetGame()
