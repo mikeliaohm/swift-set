@@ -19,15 +19,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="S16-PJ-1kk" customClass="SetCardView" customModule="set" customModuleProvider="target">
-                                <rect key="frame" x="16" y="60" width="343" height="702"/>
+                                <rect key="frame" x="16" y="60" width="343" height="718"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S16-PJ-1kk" secondAttribute="bottom" constant="16" id="CuU-iT-r3w"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="S16-PJ-1kk" secondAttribute="trailing" constant="16" id="FLY-ub-e7d"/>
-                            <constraint firstItem="S16-PJ-1kk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="OEP-0V-rKh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S16-PJ-1kk" secondAttribute="bottom" id="V8N-Od-dCT"/>
+                            <constraint firstItem="S16-PJ-1kk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="jZ7-fE-DNt"/>
                             <constraint firstItem="S16-PJ-1kk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="jcN-Ti-bCG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -35,7 +35,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.23188405797103" y="132.58928571428572"/>
+            <point key="canvasLocation" x="135.19999999999999" y="132.26600985221674"/>
         </scene>
     </scenes>
 </document>
