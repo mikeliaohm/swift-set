@@ -10,6 +10,7 @@
 		F7730DF7224A6B250086AC8B /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7730DF6224A6B240086AC8B /* Grid.swift */; };
 		F7730DF9224A76950086AC8B /* SetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7730DF8224A76950086AC8B /* SetCardView.swift */; };
 		F7D30491221C59150076104C /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D30490221C59150076104C /* SetGame.swift */; };
+		F7F96FEC2261B6EF00B9B113 /* GridFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F96FEB2261B6EF00B9B113 /* GridFrameView.swift */; };
 		F7FA35A622492FA8000CFA03 /* SetCardGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FA35A522492FA8000CFA03 /* SetCardGame.swift */; };
 		F7FD93C922199DA70070A8BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD93C822199DA70070A8BF /* AppDelegate.swift */; };
 		F7FD93CB22199DA70070A8BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FD93CA22199DA70070A8BF /* ViewController.swift */; };
@@ -42,6 +43,7 @@
 		F7730DF6224A6B240086AC8B /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		F7730DF8224A76950086AC8B /* SetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardView.swift; sourceTree = "<group>"; };
 		F7D30490221C59150076104C /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
+		F7F96FEB2261B6EF00B9B113 /* GridFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridFrameView.swift; sourceTree = "<group>"; };
 		F7FA35A522492FA8000CFA03 /* SetCardGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardGame.swift; sourceTree = "<group>"; };
 		F7FD93C522199DA70070A8BF /* set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7FD93C822199DA70070A8BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				F71E8CEE2260CBD3007193A0 /* Old */,
 				F7D3048F221C58E40076104C /* Supporting Files */,
 				F7FD93CA22199DA70070A8BF /* ViewController.swift */,
+				F7F96FEB2261B6EF00B9B113 /* GridFrameView.swift */,
 				F7730DF8224A76950086AC8B /* SetCardView.swift */,
 				F7FD93CC22199DA70070A8BF /* Main.storyboard */,
 				F7FD93D422199DA80070A8BF /* Info.plist */,
@@ -289,6 +292,7 @@
 			files = (
 				F7FA35A622492FA8000CFA03 /* SetCardGame.swift in Sources */,
 				F7FD93CB22199DA70070A8BF /* ViewController.swift in Sources */,
+				F7F96FEC2261B6EF00B9B113 /* GridFrameView.swift in Sources */,
 				F7730DF9224A76950086AC8B /* SetCardView.swift in Sources */,
 				F7FD93F722199F0E0070A8BF /* Card.swift in Sources */,
 				F7D30491221C59150076104C /* SetGame.swift in Sources */,

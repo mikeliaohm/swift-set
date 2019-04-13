@@ -24,25 +24,6 @@ struct Card: Equatable {
         
         static var all = [Attributes.choiceOne, .choiceTwo, .choiceThree]
     }
-    
-//    private var identifier: Int
-//    private(set) var cardAttribute: CardAttribute
-//    private static var identifierFactory = 0
-//
-//    private static func getUniqueIdentifier() -> Int {
-//        identifierFactory += 1
-////        assert that only 81 cards are allowed to be init'ed
-//        if identifierFactory == 82 {
-//            identifierFactory = 1
-//        }
-//        assert(identifierFactory <= 81, "Card init exceeding range, only 81 cards are available")
-//        return identifierFactory
-//    }
-    
-//    init() {
-//        self.identifier = Card.getUniqueIdentifier()
-//        self.cardAttribute = CardAttribute(at: self.identifier - 1)
-//    }
 }
 
 struct CardAttribute {

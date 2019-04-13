@@ -10,13 +10,21 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    private var game = SetCardGame()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        gridFrameView.numberOfPlayedCards = 12
+        for (index, card) in game.playedCards.enumerated() {
+            gridFrameView.setCardViews[index].card = card
+        }
+        print("subviews: \(gridFrameView.setCardViews.count)")
+        print("subviews: \(gridFrameView.subviews[4].frame)")
     }
     
-    
-//    @IBOutlet weak var setCardView: SetCardView! {
+    @IBOutlet weak var gridFrameView: GridFrameView!
+}
+    //    @IBOutlet weak var setCardView: SetCardView! {
 //        didSet {
 //            let tap = UITapGestureRecognizer(target: setCardView, action: #selector(SetCardView.tapCard(byHandlingGestureRecognizedBy: )))
 //            setCardView.addGestureRecognizer(tap)
@@ -169,7 +177,6 @@ class ViewController: UIViewController {
 //            button.setAttributedTitle(attributedString, for: UIControl.State.normal)
 //        }
 //    }
-}
-
+//}
 
 

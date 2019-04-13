@@ -56,7 +56,7 @@ struct SetCardGame {
             }
         }
         cards = cards.shuffled()
-        dealCards(with: 24)
+        dealCards(with: 12)
     }
 }
 

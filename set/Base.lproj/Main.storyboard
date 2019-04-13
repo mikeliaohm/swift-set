@@ -18,20 +18,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="S16-PJ-1kk" customClass="SetCardView" customModule="set" customModuleProvider="target">
-                                <rect key="frame" x="16" y="60" width="343" height="718"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJr-xS-seB" customClass="GridFrameView" customModule="set" customModuleProvider="target">
+                                <rect key="frame" x="16" y="44" width="343" height="734"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="S16-PJ-1kk" secondAttribute="trailing" constant="16" id="FLY-ub-e7d"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S16-PJ-1kk" secondAttribute="bottom" id="V8N-Od-dCT"/>
-                            <constraint firstItem="S16-PJ-1kk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="jZ7-fE-DNt"/>
-                            <constraint firstItem="S16-PJ-1kk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="jcN-Ti-bCG"/>
+                            <constraint firstItem="YJr-xS-seB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="VFv-Lc-ls2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="YJr-xS-seB" secondAttribute="bottom" id="VPe-Xd-oTb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="YJr-xS-seB" secondAttribute="trailing" constant="16" id="d9E-TE-zOZ"/>
+                            <constraint firstItem="YJr-xS-seB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="gbk-IX-XgG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="gridFrameView" destination="YJr-xS-seB" id="BTA-tB-C7i"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
