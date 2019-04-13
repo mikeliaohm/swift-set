@@ -12,6 +12,9 @@ struct SetCardGame {
     
     private(set) var cards = [Card](), matchedCards = [Card](), playedCards = [Card]()
     private var dealtCardNumber = 0
+    var cardsLeft: Bool {
+        return dealtCardNumber != 81
+    }
     
     mutating func evaluateSet(of chosenCards: [Card]) -> Bool {
         if checkSet(of: chosenCards) {
@@ -26,15 +29,14 @@ struct SetCardGame {
     
     private mutating func checkSet(of chosenCards: [Card]) -> Bool {
         //  IDEA: use Set(Array) to check whether arrays formed from card's four attribute have all equal elements or all unqiue elements. Set(Array).count == 1 or Set(Array).count == 3
-//        let colorAttribute = chosenCards.map { $0.color }
-//        let numberAttribute = chosenCards.map { $0.number }
-//        let shadeAttribute = chosenCards.map { $0.shade }
-//        let shapeAttribute = chosenCards.map { $0.shape }
-//        return Set(colorAttribute).setFormed &&
-//            Set(numberAttribute).setFormed &&
-//            Set(shadeAttribute).setFormed &&
-//            Set(shapeAttribute).setFormed
-        return true
+        let colorAttribute = chosenCards.map { $0.color }
+        let numberAttribute = chosenCards.map { $0.number }
+        let shadeAttribute = chosenCards.map { $0.shade }
+        let shapeAttribute = chosenCards.map { $0.shape }
+        return Set(colorAttribute).setFormed &&
+            Set(numberAttribute).setFormed &&
+            Set(shadeAttribute).setFormed &&
+            Set(shapeAttribute).setFormed
     }
     
     mutating func dealCards(with numberOfCards: Int) {
@@ -43,6 +45,18 @@ struct SetCardGame {
         let cardsDealt = Array(cards[dealtCardNumber...(dealtCardNumber + numberOfCards - 1)])
         dealtCardNumber += numberOfCards
         playedCards += cardsDealt
+    }
+    
+    func cheat() -> [[Card]] {
+        var cheat = [[Card]]()
+        for index in 0..<playedCards.count - 2 {
+            let combinationOfCards = [playedCards[index], playedCards[index+1], playedCards[index+2]]
+            cheat.append(combinationOfCards)
+        }
+//        let output = stride(from: 0, to: playedCards.count - 2, by: 3).map { (playedCards[$0], playedCards[$0+1], playedCards[$0+2]) }
+//        print("output: \(output)")
+        
+        return cheat
     }
     
     init() {
@@ -56,7 +70,7 @@ struct SetCardGame {
             }
         }
         cards = cards.shuffled()
-        dealCards(with: 12)
+        dealCards(with: 6)
     }
 }
 

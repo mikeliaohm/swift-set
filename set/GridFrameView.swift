@@ -9,28 +9,29 @@
 import UIKit
 
 class GridFrameView: UIView {
-        
-    @IBInspectable
-    var numberOfPlayedCards = 12 { didSet { layoutSubviews() } }
     
-    var setCardViews = [SetCardView]()
+    var numberOfPlayedCards = 0
+    var setCardViews = [SetCardView]() { didSet { layoutSubviews() } }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setNeedsDisplay()
+        setNeedsLayout()
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        for view in self.subviews {
-            view.removeFromSuperview()
+        if numberOfPlayedCards < 3 {
+            return
         }
         //        Determine the grid row and column size
         let gridlayout = layoutGrid(with: numberOfPlayedCards)
         let grid = Grid(layout: Grid.Layout.dimensions(rowCount: gridlayout[0], columnCount: gridlayout[1]), frame: bounds)
         
-        for index in 0..<numberOfPlayedCards {
+        for index in setCardViews.indices {
             let cellFrame = UIBezierPath(roundedRect: grid[index]!.insetBy(dx: 5.0, dy: 5.0), cornerRadius: 0.0)
             
-            let setCardView = SetCardView()
-            setCardView.frame = cellFrame.bounds
-            setCardViews.append(setCardView)
-            addSubview(setCardView)
+            setCardViews[index].frame = cellFrame.bounds
+            addSubview(setCardViews[index])
         }
     }
 }
@@ -38,8 +39,8 @@ class GridFrameView: UIView {
 extension GridFrameView {
     func layoutGrid(with numberOfPlayedCards: Int) -> [Int] {
         switch numberOfPlayedCards {
-        case 0: return [0, 0]
-        case 3: return [3, 2]
+        case 3: return [3, 1]
+        case 6: return [3, 2]
         case 9: return [3, 3]
         case 12: return [4, 3]
         case 15: return [5, 3]

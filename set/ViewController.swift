@@ -10,19 +10,114 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    private var setMatched = false
     private var game = SetCardGame()
+    private var tappedCardIndices = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        gridFrameView.numberOfPlayedCards = 12
-        for (index, card) in game.playedCards.enumerated() {
-            gridFrameView.setCardViews[index].card = card
-        }
-        print("subviews: \(gridFrameView.setCardViews.count)")
-        print("subviews: \(gridFrameView.subviews[4].frame)")
     }
     
-    @IBOutlet weak var gridFrameView: GridFrameView!
+    @IBOutlet weak var gridFrameView: GridFrameView! {
+        didSet {
+            let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(startGame))
+            swipeDown.direction = [.down]
+            gridFrameView.addGestureRecognizer(swipeDown)
+            let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(cheat))
+            swipeLeft.direction = [.left, .right]
+            gridFrameView.addGestureRecognizer(swipeLeft)
+        }
+    }
+    
+    @objc func startGame() {
+        if gridFrameView.numberOfPlayedCards != 0 {
+            if game.cardsLeft {
+                game.dealCards(with: 3)
+            } else {
+                return
+            }
+        }
+        updateUI()
+    }
+    
+    @objc func tapCard(sender: UITapGestureRecognizer) {
+        if let tappedIndex = gridFrameView.setCardViews.index(of: sender.view as! SetCardView) {
+            if tappedCardIndices.contains(tappedIndex) {
+                tappedCardIndices = tappedCardIndices.filter { $0 != tappedIndex }
+            } else {
+                tappedCardIndices.append(tappedIndex)
+            }
+        }
+        evaluateTappedCards()
+    }
+
+    @objc func cheat() {
+        let pairs = game.cheat()
+        print("swipe for cheat: \(pairs.count)")
+    }
+    
+    private func evaluateTappedCards() {
+        if setMatched {
+            tappedCardIndices.removeAll()
+            updateUI()
+            setMatched = false
+        }
+        
+        for index in gridFrameView.subviews.indices {
+            let cardFrame = gridFrameView.subviews[index]
+            if tappedCardIndices.contains(index) {
+                cardFrame.layer.borderWidth = 6.0
+                cardFrame.layer.borderColor = UIColor.blue.cgColor
+            } else {
+                cardFrame.layer.borderWidth = 0.0
+                cardFrame.layer.borderColor = nil
+            }
+        }
+        if tappedCardIndices.count == 3 {
+            let tappedCards = tappedCardIndices.map { game.playedCards[$0] }
+            if game.evaluateSet(of: tappedCards) {
+                setMatched = true
+            } else {
+                tappedCardIndices.removeAll()
+            }
+        }
+    }
+    
+    private func setMatchUI() {
+        setMatched = true
+        let bounds = self.view.bounds
+        let button = UIButton(frame: CGRect(x: bounds.midX, y: bounds.midY, width: CGFloat(integerLiteral: 200), height: CGFloat(integerLiteral: 200)))
+        
+        let attributes: [NSAttributedString.Key:Any] = [
+            .strokeColor : UIColor.black,
+            .strokeWidth : 20.0
+        ]
+        let attributedString = NSAttributedString(string: "Set is matched!", attributes: attributes)
+        
+        button.setAttributedTitle(attributedString, for: UIControl.State.normal)
+        for subview in gridFrameView.subviews {
+            subview.removeFromSuperview()
+        }
+        self.view.addSubview(button)
+        self.view.bringSubviewToFront(button)
+    }
+    
+    private func updateUI() {
+        gridFrameView.numberOfPlayedCards = game.playedCards.count
+        for subview in gridFrameView.subviews {
+            subview.removeFromSuperview()
+        }
+        gridFrameView.setCardViews.removeAll()
+        for card in game.playedCards {
+            let setCardView = SetCardView()
+            setCardView.card = card
+            gridFrameView.setCardViews.append(setCardView)
+        }
+        for subview in gridFrameView.subviews {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(tapCard))
+            subview.addGestureRecognizer(tap)
+        }
+    }
 }
     //    @IBOutlet weak var setCardView: SetCardView! {
 //        didSet {

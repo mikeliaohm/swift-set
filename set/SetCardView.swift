@@ -14,7 +14,7 @@ class SetCardView: UIView {
     var card = Card(color: .choiceOne, number: .choiceOne, shade: .choiceOne, shape: .choiceOne) { didSet { setNeedsDisplay(); setNeedsLayout() } }
 //
 //    var color: Attributes = .choiceOne { didSet { setNeedsDisplay(); setNeedsLayout() } }
-//    
+//
 //    var number: Attributes = .choiceOne { didSet { setNeedsDisplay(); setNeedsLayout() } }
 //
 //    var shade: Attributes = .choiceOne { didSet { setNeedsDisplay(); setNeedsLayout() } }
